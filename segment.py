@@ -52,6 +52,7 @@ REWRITE = False
 FIXTURE = False
 if REWRITE:
     # Build dictionary tries once and save to files
+    # grep -v [^ABDEFGHILNOPRSTUW] sowpods.txt | dd conv=lcase > onlysowpods.txt
     with open('onlysowpods.txt') as f:
         words = f.read().splitlines()
 if FIXTURE:
