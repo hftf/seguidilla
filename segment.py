@@ -5,8 +5,6 @@ from which import CommandWhich, WordWhich
 import sys
 sys.setrecursionlimit(100)
 
-numbers = range(1, 1+9)
-
 def complete(this_word, n):
     for i in range(len(this_word), 0, -1):
         end_of_this_command = this_word[:i]
