@@ -11,11 +11,19 @@ class ReversedTrie:
         return map(ReversedTrie.__reverse_str, l)
 
     @staticmethod
+    def __reverse_tuple(t):
+        k, v = t
+        return ReversedTrie.__reverse_str(k), v
+
+    @staticmethod
     def __prefix_or_none(prefix):
         return None if not prefix else ReversedTrie.__reverse_str(prefix)
 
     def keys(self, prefix=None):
         return ReversedTrie.__reverse_list(self.trie.keys(ReversedTrie.__prefix_or_none(prefix)))
+
+    def items(self, prefix=None):
+        return map(ReversedTrie.__reverse_tuple, self.trie.items(ReversedTrie.__prefix_or_none(prefix)))
 
     def has_keys_with_prefix(self, prefix=None):
         return self.trie.has_keys_with_prefix(ReversedTrie.__prefix_or_none(prefix))
@@ -23,7 +31,7 @@ class ReversedTrie:
     def iter_prefix_items(self, prefix=None):
         iter = self.trie.iter_prefix_items(ReversedTrie.__prefix_or_none(prefix))
         for i in iter:
-            yield (lambda (k, v): (ReversedTrie.__reverse_str(k), v))(i)
+            yield ReversedTrie.__reverse_tuple(i)
 
     def save(self, f):
         return self.trie.save(f)
