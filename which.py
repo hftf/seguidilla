@@ -26,7 +26,7 @@ class CommandWhich(Which):
 
     @staticmethod
     def test(end):
-        return [end[:j] for j in range(len(end), 0, -1)]
+        return [end[j:] for j in range(len(end))]
 
 @add_name_stuff
 class WordWhich(Which):
