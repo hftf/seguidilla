@@ -17,21 +17,23 @@ def complete(this_word, n):
 
 # Find all commands that end with a string
 def ending_with(which, end_of_this, n):
-    try:
-        shortest_suffix, this = which.memo.iter_prefix_items(end_of_this).next()
-        print end_of_this, ':', shortest_suffix, this
-        return this
-    except StopIteration:
-        pass
-    
-    #for memo in memos:
     indent = '>\t'*n
     print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
 
     if end_of_this in which.memo:
         return which.memo[end_of_this]
-    #print '(Not memoized.)',
-    #print '~'*14
+
+    prefix_items = which.memo.prefix_items(end_of_this)
+    for suffix, this in prefix_items:
+        print indent, end_of_this+':', suffix, this
+        if not this:
+            return this
+    # for suffix, this in which.memo.items(end_of_this):
+    #     print end_of_this+':', suffix, this
+    #     if this:
+    #         return this
+    
+    #for memo in memos:
 
     completions = which.reversed_trie.keys(end_of_this)#[:92]
     completions.sort(key=len)
