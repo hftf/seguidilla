@@ -61,9 +61,6 @@ def ending_with(which, end_of_this, n):
 
     return which.memoize(end_of_this, None, indent)
 
-test_words = ['tire', 'paw', 'eft', 'own', 'art', 'through', 'prefix', 'it']
-test_words = ['apple', 'banana', 'durian', 'egg', 'fruit', 'guava', 'hello', 'iodine',
- 'loquat', 'nutmeg', 'orange', 'pear', 'raisin', 'sugar', 'time', 'under', 'what']
 
 def main():
     for word in map(unicode, test_words):
