@@ -35,5 +35,6 @@ reversed_commands_trie = ReversedTrie(marisa_trie.Trie(reversed_commands))
 test_words = []
 [test_words.append(command[c:]) for command in commands for c in range(len(command)) if command[c:] not in test_words]
 #test_words = ['orange','tier', 'it']
+#test_words = ['p']
 
 numbers = range(1, 1+9)

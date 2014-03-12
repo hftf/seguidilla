@@ -15,8 +15,8 @@ class Which:
     memo[u'zzz'] = None # Because datrie hangs if empty
 
     @classmethod
-    def memoize(cls, key, value):
-        #print 'Memoizing',cls.name, key, u'\t→\t', value
+    def memoize(cls, key, value, indent=''):
+        print indent+'Memoizing',cls.name, key, u'\t→\t', value
         cls.memo[key] = value
         return value
 

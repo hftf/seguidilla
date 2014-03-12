@@ -17,8 +17,6 @@ def complete(this_word, n):
 
 # Find all commands that end with a string
 def ending_with(which, end_of_this, n):
-    indent = '>>\t'*n
-    ##print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
     try:
         shortest_suffix, this = which.memo.iter_prefix_items(end_of_this).next()
         print end_of_this, ':', shortest_suffix, this
@@ -27,44 +25,41 @@ def ending_with(which, end_of_this, n):
         pass
     
     #for memo in memos:
+    indent = '>\t'*n
+    print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
 
-    #print memos
     if end_of_this in which.memo:
-        #print '(Memoized!    )'
         return which.memo[end_of_this]
     #print '(Not memoized.)',
     #print '~'*14
 
     completions = which.reversed_trie.keys(end_of_this)#[:92]
     completions.sort(key=len)
-    ##print indent+'Found',len(completions),'completions:', completions
+    print indent+'Found',len(completions),'completions:', completions[:12]
 
     l = len(end_of_this)
     if not which.reversed_trie.has_keys_with_prefix(end_of_this):
-        ##print indent,
-        return which.memoize(end_of_this, None)
+        return which.memoize(end_of_this, None, indent)
 
     for this in completions:
         largest_end_of_prev = this[:-l]
         end_of_prevs = which.test(largest_end_of_prev)
-        #print indent+'>'+this+':\t', 'largest_end_of_prev:',largest_end_of_prev,'\tend_of_prevs:',' '.join(end_of_prevs)
+        ##print indent+'>'+this+':\t', 'largest_end_of_prev:',largest_end_of_prev,'\tend_of_prevs:',' '.join(end_of_prevs)
         
         # This means this is a command or word by itself
         if not largest_end_of_prev:
-            ##print indent,
-            return which.memoize(end_of_this, this)
+            return which.memoize(end_of_this, this, indent)
 
         for end_of_prev in end_of_prevs:
             # m = n - len(str(end_end_of_prev))
             prev = ending_with(which.opposite, end_of_prev, 1+n)
+            #print indent+'PREV...', prev
 
             if prev:
                 #print indent+which['on'] + str(prev) + which['off']
-                ##print indent,
-                return which.memoize(end_of_this, (prev, end_of_this))
+                return which.memoize(end_of_this, (prev, end_of_this), indent)
 
-    return which.memoize(end_of_this, None)
-
+    return which.memoize(end_of_this, None, indent)
 
 test_words = ['tire', 'paw', 'eft', 'own', 'art', 'through', 'prefix', 'it']
 test_words = ['apple', 'banana', 'durian', 'egg', 'fruit', 'guava', 'hello', 'iodine',
