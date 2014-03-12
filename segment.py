@@ -18,14 +18,16 @@ def complete(this_word, n):
 # Find all commands that end with a string
 def ending_with(which, end_of_this, n):
     indent = '>\t'*n
-    print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
+    if __debug__:
+        print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
 
     if end_of_this in which.memo:
         return which.memo[end_of_this]
 
     prefix_items = which.memo.prefix_items(end_of_this)
     for suffix, this in prefix_items:
-        print indent, end_of_this+':', suffix, this
+        if __debug__:
+            print indent, end_of_this+':', suffix, this
         if not this:
             return this
     # for suffix, this in which.memo.items(end_of_this):
@@ -37,7 +39,8 @@ def ending_with(which, end_of_this, n):
 
     completions = which.reversed_trie.keys(end_of_this)#[:92]
     completions.sort(key=len)
-    print indent+'Found',len(completions),'completions:', completions[:12]
+    if __debug__:
+        print indent+'Found',len(completions),'completions:', completions[:12]
 
     l = len(end_of_this)
     if not which.reversed_trie.has_keys_with_prefix(end_of_this):

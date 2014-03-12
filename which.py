@@ -16,7 +16,8 @@ class Which:
 
     @classmethod
     def memoize(cls, key, value, indent=''):
-        print indent+'Memoizing',cls.name, key, u'\t→\t', value
+        if __debug__:
+            print indent+'Memoizing',cls.name, key, u'\t→\t', value
         cls.memo[key] = value
         return value
 
