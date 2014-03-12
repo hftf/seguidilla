@@ -28,10 +28,8 @@ class ReversedTrie:
     def has_keys_with_prefix(self, prefix=None):
         return self.trie.has_keys_with_prefix(ReversedTrie.__prefix_or_none(prefix))
 
-    def iter_prefix_items(self, prefix=None):
-        iter = self.trie.iter_prefix_items(ReversedTrie.__prefix_or_none(prefix))
-        for i in iter:
-            yield ReversedTrie.__reverse_tuple(i)
+    def prefix_items(self, prefix=None):
+        return None if not prefix else map(ReversedTrie.__reverse_tuple, self.trie.prefix_items(ReversedTrie.__prefix_or_none(prefix)))
 
     def save(self, f):
         return self.trie.save(f)
