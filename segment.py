@@ -49,7 +49,8 @@ def ending_with(which, end_of_this, n):
     for this in completions:
         largest_end_of_prev = this[:-l]
         end_of_prevs = which.test(largest_end_of_prev)
-        ##print indent+'>'+this+':\t', 'largest_end_of_prev:',largest_end_of_prev,'\tend_of_prevs:',' '.join(end_of_prevs)
+        if __debug__:
+            print indent+'>'+this+':\t', 'largest_end_of_prev:',largest_end_of_prev,'\tend_of_prevs:',' '.join(end_of_prevs)
         
         # This means this is a command or word by itself
         if not largest_end_of_prev:
@@ -58,7 +59,8 @@ def ending_with(which, end_of_this, n):
         for end_of_prev in end_of_prevs:
             # m = n - len(str(end_end_of_prev))
             prev = ending_with(which.opposite, end_of_prev, 1+n)
-            #print indent+'PREV...', prev
+            if __debug__:
+                print indent+'PREV...', prev
 
             if prev:
                 #print indent+which['on'] + str(prev) + which['off']
