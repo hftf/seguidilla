@@ -70,6 +70,9 @@ def ending_with(which, end_of_this, n):
 
 
 def main():
+    global test_words
+    if len(sys.argv) > 1:
+        test_words = sys.argv[1:]
     for word in map(unicode, test_words):
         result = complete(word,0)
         print word+'\t', BOLD_ON+UNDERLINE_ON+str(result)+UNDERLINE_OFF+BOLD_OFF
