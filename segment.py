@@ -34,15 +34,9 @@ def ending_with(which, end_of_this, n):
             print indent, 'Checking memoized suffixes of', end_of_this+':', (suffix, this)
         if not this:
             return this
-    # for suffix, this in which.memo.items(end_of_this):
-    #     print end_of_this+':', suffix, this
-    #     if this:
-    #         return this
-    
-    #for memo in memos:
 
     # Get all the words that have the suffix end_of_this
-    completions = which.reversed_trie.keys(end_of_this)#[:92]
+    completions = which.reversed_trie.keys(end_of_this)
     completions.sort(key=len)
     if __debug__:
         print indent+'Found',len(completions),'completions:', completions[:12]
