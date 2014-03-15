@@ -2,8 +2,9 @@ import marisa_trie
 from load import *
 from reversed_trie import ReversedTrie
 from which import CommandWhich, WordWhich
-import sys
+import sys, codecs
 sys.setrecursionlimit(100)
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def complete(this_word, n):
     for i in range(len(this_word), 0, -1):
