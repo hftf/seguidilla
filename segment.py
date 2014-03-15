@@ -22,13 +22,16 @@ def ending_with(which, end_of_this, n):
     if __debug__:
         print indent+'['+BOLD_ON+which.name+'s'+BOLD_OFF+'] ending in '+end_of_this+'\t'
 
+    # Return result if already memoized
     if end_of_this in which.memo:
         return which.memo[end_of_this]
 
+    # If there was no solution to any suffixes of end_of_this,
+    # then there can't be a solution for end_of_this
     prefix_items = which.memo.prefix_items(end_of_this)
     for suffix, this in prefix_items:
         if __debug__:
-            print indent, end_of_this+':', suffix, this
+            print indent, 'Checking memoized suffixes of', end_of_this+':', (suffix, this)
         if not this:
             return this
     # for suffix, this in which.memo.items(end_of_this):
@@ -38,6 +41,7 @@ def ending_with(which, end_of_this, n):
     
     #for memo in memos:
 
+    # Get all the words that have the suffix end_of_this
     completions = which.reversed_trie.keys(end_of_this)#[:92]
     completions.sort(key=len)
     if __debug__:
@@ -53,7 +57,8 @@ def ending_with(which, end_of_this, n):
         if __debug__:
             print indent+'>'+this+':\t', 'largest_end_of_prev:',largest_end_of_prev,'\tend_of_prevs:',' '.join(end_of_prevs)
         
-        # This means this is a command or word by itself
+        # If the prefix of this completion is empty,
+        # then it means the suffix is a word by itself
         if not largest_end_of_prev:
             return which.memoize(end_of_this, this, indent)
 
