@@ -56,6 +56,22 @@ def ending_with(which, end_of_this, n):
         if not largest_end_of_prev:
             return which.memoize(end_of_this, this, indent)
 
+        # Get all words that are (non-strict) suffixes of the prefix of this completion
+        suffixes_of_prefix = which.opposite.reversed_trie.prefixes(largest_end_of_prev)
+        suffixes_of_prefix.sort(key=len)
+
+        for suffix_of_prefix in suffixes_of_prefix:
+            prefix_of_prefix = largest_end_of_prev[:-len(suffix_of_prefix)]
+
+            # If the prefix of the prefix is empty,
+            # then it means the prefix is a word by itself
+            if not prefix_of_prefix:
+                return which.memoize(end_of_this, (largest_end_of_prev, end_of_this), indent)
+
+            prev = ending_with(which.opposite, prefix_of_prefix, 1+n)
+            if prev:
+                return which.memoize(end_of_this, (prev, suffix_of_prefix, end_of_this), indent)
+
         for end_of_prev in end_of_prevs:
             # m = n - len(str(end_end_of_prev))
             prev = ending_with(which.opposite, end_of_prev, 1+n)
